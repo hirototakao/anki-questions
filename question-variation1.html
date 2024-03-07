@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  {{question-description}}
+<style>
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: solid 1px #f0f0f0;
+  min-width: 70%;
+  margin:0 auto;
+}
+tr {
+  background-color: #fff;
+}
+tr:nth-child(2n) {
+  background-color: #f9f9f9;
+}
+
+th, td {
+  border: solid 1px #f0f0f0;
+  padding: 0.5rem;
+}
+
+.data-set {
+font-family:serif;
+background-color:rgb(248, 245, 250);
+margin-left:454px;
+margin-right:454px;
+border-radius:9px;
+}
+
+.answer-button {
+  margin-top:50px;
+}
+
+.answer-button button {
+  margin-left:12px;
+  margin-right:12px;
+}
+
+.modal {
+  position:fixed;
+  z-index:9;
+  top:40%;
+  left:45%;
+  width:200px;
+  height:150px;
+  background-color:white;
+}
+  </style>
+  <div class="modal" style="display:none;" id="modal">
+    <h4>How to use it</h4>
+    <p>Click the "Make sure the answer" button to check the your inputted answers.</p>
+    <button onclick="closePopUp()">✕</button>
+  </div>
+  <div class="main-question">
+    <div class="data-set">
+    <p>6, 20, 0, 14, 16, 23, 1, 4<br>
+       5, 0, 18, 13, 21, 0, 9</p>
+    </div>
+      
+    <table id="table">
+        <tr id="row1">
+          <th>
+            {{row1}}
+          </th>
+          <th>
+            {{row2}}
+          </th>
+          <th>
+            {{row3}}
+          </th>
+          <th>
+           {{row4}}
+          </th>
+        </tr>
+    
+        <tr id="row2">
+          <th>
+            {{column1}}
+          </th>
+          <th>
+            4
+          </th>
+          <th id="parentElement1">
+            <input 
+             type="text"
+             id="frequency-answer1"
+             name="0.27">
+          </th>
+          <th>
+            <textarea id="textarea1" class="textarea-content"></textarea>
+            <button id="button1" onclick="calculatePercentage(document.getElementById('textarea1'))">Calculate percentage <br> as decimal</button>
+          </th>
+        </tr>
+    
+        <tr id="row3">
+          <th>
+           {{column2}}
+          </th>
+          <th>
+            3
+          </th>
+          <th id="parentElement2">
+            <input 
+              type="text"
+              id="frequency-answer2"
+              name="0.2">
+          </th>
+          <th>
+            <textarea id="textarea2" class="textarea-content"></textarea>
+            <button id="button2" onclick="calculatePercentage(document.getElementById('textarea2'))">Calculate percentage <br> as decimal</button> 
+         </th>
+        </tr>
+    
+        <tr id="row4">
+          <th>
+            {{column3}}
+          </th>
+          <th>
+            1
+          </th>
+          <th id="parentElement3">
+            <input 
+              type="text"
+              id="frequency-answer3"
+              name="0.07">
+          </th>
+         <th>
+          <textarea id="textarea3" class="textarea-content"></textarea>
+          <button id="button3" onclick="calculatePercentage(document.getElementById('textarea3'))">Calculate percentage <br> as decimal</button>
+        </th>
+        </tr>
+    
+        <tr id="row5">
+          <th>
+            {{column4}}
+          </th>
+          <th>
+            2
+          </th>
+          <th id="parentElement4">
+            <input 
+              type="text"
+              id="frequency-answer4"
+              name="0.13">
+          </th>
+          <th>
+            <textarea id="textarea4" class="textarea-content"></textarea>
+         <button id="button4" onclick="calculatePercentage(document.getElementById('textarea4'))">Calculate percentage <br> as decimal</button> 
+         </th>
+        </tr>
+    
+        <tr id="row6">
+          <th>
+            {{column5}}
+          </th>
+          <th>
+            2
+          </th>
+          <th id="parentElement5">
+            <input 
+              type="text"
+              id="frequency-answer5"
+              name="0.13">
+         </th>
+          <th>
+            <textarea id="textarea5" class="textarea-content"></textarea>
+          <button id="button5" onclick="calculatePercentage(document.getElementById('textarea5'))">Calculate percentage <br> as decimal</button>
+          </th>
+        </tr>
+    
+        <tr id="row7">
+          <th>
+            {{column6}}
+          </th>
+          <th>
+            3
+          </th>
+          <th id="parentElement6">
+            <input 
+              type="text"
+              id="frequency-answer6"
+              name="0.2">
+         </th>
+          <th>
+            <textarea id="textarea6" class="textarea-content"></textarea>
+            <button id="button6" onclick="calculatePercentage(document.getElementById('textarea6'))">Calculate percentage <br> as decimal</button>
+          </th>
+        </tr>
+    
+        <tr id="row8">
+          <th>
+            計
+          </th>
+          <th>
+            15
+          </th>
+          <th id="parentElement7">
+            <input 
+              type="text" 
+              id="frequency-answer7"
+              name="1.00">
+          </th>
+          <th>
+            <textarea id="textarea7" class="textarea-content"></textarea>
+            <button onclick="addUpPercentage(document.getElementById('textarea7'))">Add up all percentages <br> as decimal</button>
+          </th>
+        </tr>
+      </table>
+  </div>
+  <div class="answer-button">
+    <button id="answer-button">Make sure the answer</button>
+    <button onclick="openPopUp()" id="usage-button">Usage</button>
+  </div>
+  <script>
+    document.getElementById("answer-button").addEventListener("click", answerChecker);
+    
+    function answerChecker() {
+      const InputTag = document.getElementsByTagName("input");
+      const memo = document.getElementsByTagName("textarea");
+      const questions = [];
+      for(let i = 0; i < InputTag.length; i++) {
+        const question = {};
+        question.textArea = InputTag[i];
+        question.memo = memo[i];
+        question.parent = question.textArea.parentElement.getAttribute("id");
+        question.answer = question.textArea.getAttribute("name");
+        question.identifier = false;
+        questions.push(question);
+      }
+      
+      for(let i = 0; i < questions.length; i++){
+        const textElement = Object.values(questions)[i].textArea;
+        const userInput = textElement.value;
+        const correctAnswer = Object.values(questions)[i].answer;
+        const parentElement = Object.values(questions)[i].parent;
+        const memo = Object.values(questions)[i].memo;
+        const dataSet = memo.getAttribute("name");
+        let identifier = Object.values(questions)[i].identifier;
+        const parentElementId = document.getElementById(parentElement);
+
+          if(userInput === correctAnswer){
+            parentElementId.innerText = `${correctAnswer}`;
+            parentElementId.style.color = "green";
+            identifier = true;
+            memo.innerText = dataSet;
+            console.log(`${textElement.id}: ${identifier}, Input: ${userInput}, Answer: ${correctAnswer},  Dataset: ${dataSet}`);
+          } if(userInput !== correctAnswer) {
+            if(parentElementId.innerText === "It's wrong. Please type the correct answer again."){
+              return;
+            }
+            const Input = document.getElementById(textElement.id);
+            Input.style.border = "1px solid red";
+            Input.style.color = "red";
+            const node = document.createElement("p");
+            const textNode = document.createTextNode("It's wrong. Please type the correct answer again.");
+            node.appendChild(textNode);
+            parentElementId.appendChild(node).style.color = "red";
+            console.log(`${textElement.id}: ${identifier}, Input: ${userInput}, Answer: ${correctAnswer}`);
+          }
+      }
+  }
+  
+  function openPopUp() {
+    document.getElementById("modal").style.display = "block"; 
+  }
+
+  function closePopUp() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+ function calculatePercentage(textarea) {
+  const value1 = textarea.value;
+  console.log(`value1: ${value1}-`);
+      
+  if(textarea.value === ""){
+    textarea.style.border = "1px solid red";
+    return;
+  }
+  const result = Math.round(value1 / 15 * 10000) / 10000;
+  textarea.value = `${result}`;
+  console.log(`Calculated value: ${result}`);
+  }
+
+  function addUpPercentage(total) {
+    const value1 = total.value.slice(0, 4); // = 0.27
+    const value2 = total.value.slice(5, 8); // = 0.2
+    const value3 = total.value.slice(9, 13); // = 0.07
+    const value4 = total.value.slice(14, 18); // = 0.13
+    const value5 = total.value.slice(19, 23); // = 0.13
+    const value6 = total.value.slice(24, 27); // = 0.2
+    total.value = `${Number(value1) + Number(value2) + Number(value3) + Number(value4) + Number(value5) + Number(value6)}`
+  }
+  </script>
+</body>
+</html>

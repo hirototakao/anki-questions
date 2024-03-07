@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: solid 1px #f0f0f0;
+  min-width: 70%;
+  margin:0 auto;
+}
+tr {
+  background-color: #fff;
+}
+tr:nth-child(2n) {
+  background-color: #f9f9f9;
+}
+
+th, td {
+  border: solid 1px #f0f0f0;
+  padding: 0.5rem;
+}
+
+.data-set {
+font-family:serif;
+background-color:rgb(248, 245, 250);
+margin-left:454px;
+margin-right:454px;
+border-radius:9px;
+}
+
+.answer-button {
+  margin-top:50px;
+}
+
+.answer-button button {
+  margin-left:12px;
+  margin-right:12px;
+}
+
+.modal {
+  position:fixed;
+  z-index:9;
+  top:40%;
+  left:45%;
+  width:200px;
+  height:150px;
+  background-color:white;
+}
+  </style>
+</head> 
+<body id="body">
+  <div class="modal" style="display:none;" id="modal">
+    <h4>How to use it</h4>
+    <p>Click the "Make sure the answer" button to check the your inputted answers.</p>
+    <button onclick="closePopUp()">✕</button>
+  </div>
+  <div class="main-question">
+    <div class="data-set">
+    <p>6, 20, 0, 14, 16, 23, 1, 4<br>
+       5, 0, 18, 13, 21, 0, 9</p>
+    </div>
+      
+    <table id="table">
+        <tr id="row1">
+          <th>
+            時間の階級（時間）
+          </th>
+          <th>
+            階級値（時間）
+          </th>
+          <th>
+            度数（人）
+          </th>
+          <th>
+           属するデータ
+          </th>
+        </tr>
+    
+        <tr id="row2">
+          <th>
+            0≦a≦4
+          </th>
+          <th>
+            2
+          </th>
+          <th id="parentElement1">
+            <input 
+             type="text"
+             id="frequency-answer1"
+             name="5">
+          </th>
+          <th>
+            <textarea id="textarea1" name="0, 0, 0, 1"></textarea>
+          </th>
+        </tr>
+    
+        <tr id="row3">
+          <th>
+            4≦a≦8
+          </th>
+          <th>
+            6
+          </th>
+          <th id="parentElement2">
+            <input 
+              type="text"
+              id="frequency-answer2"
+              name="3">
+          </th>
+          <th>
+            <textarea id="textarea2" name="4, 5, 6"></textarea>
+          </th>
+        </tr>
+    
+        <tr id="row4">
+          <th>
+            8≦a≦12
+          </th>
+          <th>
+            10
+          </th>
+          <th id="parentElement3">
+            <input 
+              type="text"
+              id="frequency-answer3"
+              name="1">
+          </th>
+         <th>
+          <textarea id="textarea3" name="9"></textarea>
+        </th>
+        </tr>
+    
+        <tr id="row5">
+          <th>
+            12≦a≦16
+          </th>
+          <th>
+            14
+          </th>
+          <th id="parentElement4">
+            <input 
+              type="text"
+              id="frequency-answer4"
+              name="2">
+          </th>
+          <th>
+            <textarea id="textarea4" name="13, 14"></textarea>
+          </th>
+        </tr>
+    
+        <tr id="row6">
+          <th>
+            16≦a≦20
+          </th>
+          <th>
+            18
+          </th>
+          <th id="parentElement5">
+            <input 
+              type="text"
+              id="frequency-answer5"
+              name="2">
+         </th>
+          <th>
+            <textarea id="textarea5" name="16, 18"></textarea>
+          </th>
+        </tr>
+    
+        <tr id="row7">
+          <th>
+            20≦a≦24
+          </th>
+          <th>
+            22
+          </th>
+          <th id="parentElement6">
+            <input 
+              type="text"
+              id="frequency-answer6"
+              name="2">
+         </th>
+          <th>
+            <textarea id="textarea6" name="21, 23"></textarea>
+          </th>
+        </tr>
+    
+        <tr id="row8">
+          <th>
+            計
+          </th>
+          <th>
+            none
+          </th>
+          <th id="parentElement7">
+            <input 
+              type="text" 
+              id="frequency-answer7"
+              name="15">
+          </th>
+          <th>
+            <textarea id="textarea7" name="6, 20, 0, 14, 16, 23, 1, 4, 5, 0, 18, 13, 21, 0, 9"></textarea>
+          </th>
+        </tr>
+      </table>
+  </div>
+  <div class="answer-button">
+    <button id="answer-button">Make sure the answer</button>
+    <button onclick="openPopUp()" id="usage-button">Usage</button>
+  </div>
+  <script>
+    document.getElementById("answer-button").addEventListener("click", answerChecker);
+    
+    function answerChecker() {
+      const InputTag = document.getElementsByTagName("input");
+      const memo = document.getElementsByTagName("textarea");
+      const questions = [];
+      for(let i = 0; i < InputTag.length; i++) {
+        const question = {};
+        question.textArea = InputTag[i];
+        question.memo = memo[i];
+        question.parent = question.textArea.parentElement.getAttribute("id");
+        question.answer = question.textArea.getAttribute("name");
+        question.identifier = false;
+        questions.push(question);
+      }
+      
+      for(let i = 0; i < questions.length; i++){
+        const textElement = Object.values(questions)[i].textArea;
+        const userInput = textElement.value;
+        const correctAnswer = Object.values(questions)[i].answer;
+        const parentElement = Object.values(questions)[i].parent;
+        const memo = Object.values(questions)[i].memo;
+        const dataSet = memo.getAttribute("name");
+        let identifier = Object.values(questions)[i].identifier;
+        const parentElementId = document.getElementById(parentElement);
+
+          if(userInput === correctAnswer){
+            parentElementId.innerText = `${correctAnswer}`;
+            parentElementId.style.color = "green";
+            identifier = true;
+            memo.innerText = dataSet;
+            console.log(`${textElement.id}: ${identifier}, Input: ${userInput}, Answer: ${correctAnswer},  Dataset: ${dataSet}`);
+          } if(userInput !== correctAnswer) {
+            if(parentElementId.innerText === "It's wrong. Please type the correct answer again."){
+              return;
+            }
+            const Input = document.getElementById(textElement.id);
+            Input.style.border = "1px solid red";
+            Input.style.color = "red";
+            const node = document.createElement("p");
+            const textNode = document.createTextNode("It's wrong. Please type the correct answer again.");
+            node.appendChild(textNode);
+            parentElementId.appendChild(node).style.color = "red";
+            console.log(`${textElement.id}: ${identifier}, Input: ${userInput}, Answer: ${correctAnswer}`);
+          }
+      }
+  }
+  
+  function openPopUp() {
+    document.getElementById("modal").style.display = "block"; 
+  }
+
+  function closePopUp() {
+    document.getElementById("modal").style.display = "none";
+  }
+  </script>
+</body>
+</html>

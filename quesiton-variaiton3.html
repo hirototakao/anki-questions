@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: solid 1px #f0f0f0;
+  margin:0 auto;
+}
+
+#table{
+  min-width: 70%;
+}
+
+.data-table {
+float:left;
+width:45%;
+height:440px;
+margin-left:80px;
+}
+.img {
+  float:right;
+  width:315px;
+  padding-right:80px;
+}
+
+tr {
+  background-color: #fff;
+}
+tr:nth-child(2n) {
+  background-color: #f9f9f9;
+}
+
+th, td {
+  border: solid 1px #f0f0f0;
+  padding: 0.5rem;
+}
+
+.data-set {
+font-family:serif;
+background-color:rgb(248, 245, 250);
+margin-left:454px;
+margin-right:454px;
+border-radius:9px;
+}
+
+.answer-button {
+  margin-top:50px;
+}
+
+.answer-button button {
+  margin-left:12px;
+  margin-right:12px;
+}
+
+.modal {
+  visibility:hide;
+  position:fixed;
+  top:250px;
+  left:500px;
+  z-index:9;
+  width:200px;
+  height:150px;
+  background-color:white;
+}
+
+.dark-theme {
+background-color:rgba(0, 0, 0, .5);
+}
+
+.general-theme {
+background-color:white;
+}
+
+.answer {
+color:green;
+}
+  </style>
+</head>
+<body>
+  {{question-description}}
+  <div class="modal" style="display:none;" id="modal">
+    <h4>How to use it</h4>
+    <p>Click the "Make sure the answer" button to check the your inputted answers.</p>
+    <button onclick="closePopUp()">✕</button>
+  </div>
+  <div class="main-question">
+    <div class="data">
+      <table class="data-table">
+        <tr>
+          <th>
+            {{row1}}
+          </th>
+          <th>
+            {{row2}}
+          </th>
+          <th>
+            {{row1}}
+          </th>
+          <th>
+           {{row2}}
+          </th>
+        </tr>
+        <tr>
+          <th>8</th>
+          <th>13</th>
+          <th>8</th>
+          <th>12</th>
+        </tr>
+        <tr>
+          <th>5</th>
+          <th>9</th>
+          <th>2</th>
+          <th>8</th>
+        </tr>
+        <tr>
+          <th>5</th>
+          <th>11</th>
+          <th>6</th>
+          <th>12</th>
+        </tr>
+        <tr>
+          <th>4</th>
+          <th>5</th>
+          <th>4</th>
+          <th>9</th>
+        </tr>
+        <tr>
+          <th>6</th>
+          <th>6</th>
+          <th>2</th>
+          <th>5</th>
+        </tr>
+     <table>
+     <h1 class="img">{{image}}<h1>
+    </div>
+      
+    <table id="table">
+        <tr id="row1">
+          <th>
+            x
+          </th>
+          <th>
+            y
+          </th>
+          <th>
+            xの偏差
+          </th>
+          <th>
+           (xの偏差)²
+          </th>
+          <th>
+            yの偏差
+          </th>
+          <th>
+           (yの偏差)²
+          </th>
+          <th>
+           偏差の積
+          </th>
+        </tr>
+    
+        <tr id="row2">
+          <th>
+            8
+          </th>
+          <th>
+            13
+          </th>
+          <th id="parentElement1">
+            <input          
+              type="text"
+              id="frequency-answer1"
+              name="9">
+          </th>
+          <th id="parentElement2">
+            <input 
+             type="text"
+             id="frequency-answer2"
+             name="9">
+          </th>
+          <th id="parentElement3">
+            <input 
+             type="text"
+             id="frequency-answer3"
+             name="9">
+          </th>
+          <th id="parentElement4">
+            <input 
+             type="text"
+             id="frequency-answer4"
+             name="9">
+          </th>
+          <th id="parentElement5">
+            <input 
+             type="text"
+             id="frequency-answer5"
+             name="9">
+          </th>
+        </tr>
+    
+        <tr id="row3">
+          <th>
+            5
+          </th>
+          <th>
+            9
+          </th>
+          <th id="parentElement6">
+            <input 
+              type="text"
+              id="frequency-answer6"
+              name="9">
+          </th>
+          <th id="parentElement7">
+            <input 
+             type="text"
+             id="frequency-answer7"
+             name="9">
+          </th>
+          <th id="parentElement8">
+            <input 
+             type="text"
+             id="frequency-answer8"
+             name="9">
+          </th>
+          <th id="parentElement9">
+            <input 
+             type="text"
+             id="frequency-answer9"
+             name="9">
+          </th>
+          <th id="parentElement10">
+            <input 
+             type="text"
+             id="frequency-answer10"
+             name="9">
+          </th>
+        </tr>
+    
+        <tr id="row4">
+          <th>
+            5
+          </th>
+          <th>
+            11
+          </th>
+          <th id="parentElement11">
+            <input 
+              type="text"
+              id="frequency-answer11"
+              name="9">
+          </th>
+          <th id="parentElement12">
+            <input 
+             type="text"
+             id="frequency-answer12"
+             name="9">
+          </th>
+          <th id="parentElement13">
+            <input 
+             type="text"
+             id="frequency-answer13"
+             name="9">
+          </th>
+          <th id="parentElement14">
+            <input 
+             type="text"
+             id="frequency-answer14"
+             name="9">
+          </th>
+          <th id="parentElement15">
+            <input 
+             type="text"
+             id="frequency-answer15"
+             name="9">
+          </th>
+        </tr>
+    
+        <tr id="row5">
+          <th>
+            4
+          </th>
+          <th>
+            5
+          </th>
+          <th id="parentElement16">
+            <input 
+              type="text"
+              id="frequency-answer16"
+              name="9">
+          </th>
+          <th id="parentElement17">
+            <input 
+             type="text"
+             id="frequency-answer17"
+             name="9">
+          </th>
+          <th id="parentElement18">
+            <input 
+             type="text"
+             id="frequency-answer18"
+             name="9">
+          </th>
+          <th id="parentElement19">
+            <input 
+             type="text"
+             id="frequency-answer19"
+             name="9">
+          </th>
+          <th id="parentElement20">
+            <input 
+             type="text"
+             id="frequency-answer20"
+             name="9">
+          </th>
+        </tr>
+    
+        <tr id="row6">
+          <th>
+            6
+          </th>
+          <th>
+            6
+          </th>
+          <th id="parentElement21">
+            <input 
+              type="text"
+              id="frequency-answer21"
+              name="9">
+         </th>
+         <th id="parentElement22">
+          <input 
+           type="text"
+           id="frequency-answer22"
+           name="9">
+        </th>
+        <th id="parentElement23">
+          <input 
+           type="text"
+           id="frequency-answer23"
+           name="9">
+        </th>
+        <th id="parentElement24">
+          <input 
+           type="text"
+           id="frequency-answer24"
+           name="9">
+        </th>
+        <th id="parentElement25">
+          <input 
+           type="text"
+           id="frequency-answer25"
+           name="9">
+        </th>
+        </tr>
+    
+        <tr id="row7">
+          <th>
+             8
+          </th>
+          <th>
+            12
+          </th>
+          <th id="parentElement26">
+            <input 
+              type="text"
+              id="frequency-answer26"
+              name="9">
+         </th>
+         <th id="parentElement27">
+          <input 
+           type="text"
+           id="frequency-answer27"
+           name="9">
+        </th>
+        <th id="parentElement28">
+          <input 
+           type="text"
+           id="frequency-answer28"
+           name="9">
+        </th>
+        <th id="parentElement29">
+          <input 
+           type="text"
+           id="frequency-answer29"
+           name="9">
+        </th>
+        <th id="parentElement30">
+          <input 
+           type="text"
+           id="frequency-answer30"
+           name="9">
+        </th>
+        </tr>
+        
+        <tr id="row8">
+          <th>
+             2
+          </th>
+          <th>
+            8
+          </th>
+          <th id="parentElement31">
+            <input 
+              type="text"
+              id="frequency-answer31"
+              name="9">
+         </th>
+         <th id="parentElement32">
+          <input 
+           type="text"
+           id="frequency-answer32"
+           name="9">
+        </th>
+        <th id="parentElement33">
+          <input 
+           type="text"
+           id="frequency-answer33"
+           name="9">
+        </th>
+        <th id="parentElement34">
+          <input 
+           type="text"
+           id="frequency-answer34"
+           name="9">
+        </th>
+        <th id="parentElement35">
+          <input 
+           type="text"
+           id="frequency-answer35"
+           name="9">
+        </th>
+        </tr>
+        <tr id="row9">
+          <th>
+             6
+          </th>
+          <th>
+            12
+          </th>
+          <th id="parentElement36">
+            <input 
+              type="text"
+              id="frequency-answer36"
+              name="9">
+         </th>
+         <th id="parentElement37">
+          <input 
+           type="text"
+           id="frequency-answer37"
+           name="9">
+        </th>
+        <th id="parentElement38">
+          <input 
+           type="text"
+           id="frequency-answer38"
+           name="9">
+        </th>
+        <th id="parentElement39">
+          <input 
+           type="text"
+           id="frequency-answer39"
+           name="9">
+        </th>
+        <th id="parentElement40">
+          <input 
+           type="text"
+           id="frequency-answer40"
+           name="9">
+        </th>
+        </tr>
+        <tr id="row10">
+          <th>
+             4
+          </th>
+          <th>
+            9
+          </th>
+          <th id="parentElement41">
+            <input 
+              type="text"
+              id="frequency-answer41"
+              name="9">
+         </th>
+         <th id="parentElement42">
+          <input 
+           type="text"
+           id="frequency-answer42"
+           name="9">
+        </th>
+        <th id="parentElement43">
+          <input 
+           type="text"
+           id="frequency-answer43"
+           name="9">
+        </th>
+        <th id="parentElement44">
+          <input 
+           type="text"
+           id="frequency-answer44"
+           name="9">
+        </th>
+        <th id="parentElement45">
+          <input 
+           type="text"
+           id="frequency-answer45"
+           name="9">
+        </th>
+        </tr>
+        <tr id="row11">
+          <th>
+             2
+          </th>
+          <th>
+            5
+          </th>
+          <th id="parentElement46">
+            <input 
+              type="text"
+              id="frequency-answer46"
+              name="9">
+         </th>
+         <th id="parentElement47">
+          <input 
+           type="text"
+           id="frequency-answer47"
+           name="9">
+        </th>
+        <th id="parentElement48">
+          <input 
+           type="text"
+           id="frequency-answer48"
+           name="9">
+        </th>
+        <th id="parentElement49">
+          <input 
+           type="text"
+           id="frequency-answer49"
+           name="9">
+        </th>
+        <th id="parentElement50">
+          <input 
+           type="text"
+           id="frequency-answer50"
+           name="9">
+        </th>
+        </tr>
+        <tr id="row12">
+          <th>
+            計
+          </th>
+          <th>
+            none
+          </th>
+          <th>
+            0
+          </th>
+          <th id="parentElement51">
+          <input 
+           type="text"
+           id="frequency-answer51"
+           name="9">
+          </th>
+          <th id="parentElement52">
+            <input 
+             type="text"
+             id="frequency-answer52"
+             name="9">
+          </th>
+          <th>
+            0
+          </th>
+          <th id="parentElement53">
+            <input 
+             type="text"
+             id="frequency-answer53"
+             name="9">
+          </th>
+        </tr>
+      </table>
+  </div>
+  <div class="answer-button">
+    <button id="answer-button">Make sure the answer</button>
+    <button onclick="openPopUp()" id="usage-button">Usage</button>
+  </div>
+  <script>
+    document.getElementById("answer-button").addEventListener("click", answerChecker);
+    
+    function answerChecker() {
+      const InputTag = document.getElementsByTagName("input");
+      const questions = [];
+      for(let i = 0; i < InputTag.length; i++) {
+        const question = {};
+        question.textArea = InputTag[i];
+        question.parent = question.textArea.parentElement.getAttribute("id");
+        question.answer = question.textArea.getAttribute("name");
+        question.identifier = false;
+        questions.push(question);
+      }
+      
+      for(let i = 0; i < questions.length; i++){
+        const textElement = Object.values(questions)[i].textArea;
+        const userInput = textElement.value;
+        const correctAnswer = Object.values(questions)[i].answer;
+        const parentElement = Object.values(questions)[i].parent;
+        const parentElementId = document.getElementById(parentElement);
+
+          if(userInput === correctAnswer){
+            parentElementId.innerText = `${correctAnswer}`;
+            parentElementId.style.color = "green";
+            console.log(`${textElement.id}: Input: ${userInput}, Answer: ${correctAnswer}`);
+          } if(userInput !== correctAnswer) {
+            if(parentElementId.innerText === "It's wrong. Please type the correct answer again."){
+              return;
+            }
+            const Input = document.getElementById(textElement.id);
+            Input.style.border = "1px solid red";
+            Input.style.color = "red";
+            const node = document.createElement("p");
+            const textNode = document.createTextNode("It's wrong. Please type the correct answer again.");
+            node.appendChild(textNode);
+            parentElementId.appendChild(node).style.color = "red";
+            console.log(`${textElement.id}: Input: ${userInput}, Answer: ${correctAnswer}`);
+          }
+      }
+  }
+  
+  function openPopUp() {
+    document.getElementById("modal").style.display = "block"; 
+  }
+
+  function closePopUp() {
+    document.getElementById("modal").style.display = "none";
+  }
+  </script>
+</body>
+</html>
